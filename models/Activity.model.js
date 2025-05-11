@@ -17,10 +17,27 @@ const activitySchema = new mongoose.Schema({
     required: [true, 'Location is required'],
     trim: true,
   },
-  dateTime: {
-    type: Date,
-    required: [true, 'Date and time are required'],
+  date: {
+    type: String,
+    required: [true, 'Date is required'],
+    match: [/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format'],
   },
-}, { timestamps: true });
+  time: {
+    type: String,
+    required: [true, 'Time is required'],
+    match: [/^\d{2}:\d{2}:\d{2}$/, 'Time must be in HH:mm:ss format'],
+  },
+  type: {
+    type: String,
+    enum: ['cricket', 'football', 'movie', 'other'],
+    default: 'other',
+    required: true,
+  },
+  isBooked: {
+    type: Boolean,
+    default: false,
+  }
+
+}, { timestamps: true, versionKey: false });
 
 export default mongoose.model('Activity', activitySchema);

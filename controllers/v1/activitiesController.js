@@ -2,10 +2,24 @@ import Activity from '../../models/Activity.model.js';
 
 export const listActivities = async (req, res) => {
   try {
-    const { type } = req.query;
-    const query = type ? { type } : {};
-    const activities = await Activity.find(query).select('title description location dateTime type');
+    const { type, date} = req.query;
+
+    let findCondition ={isBooked: false};
+
+
+    if(type)
+        findCondition= {...findCondition,type};
+
+    if(date)
+        findCondition= {...findCondition,date};
+
+
+
+    const activities = await Activity.find(findCondition).select('title description location dateTime type');
+
     res.json(activities);
+
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -13,14 +27,15 @@ export const listActivities = async (req, res) => {
 };
 
 export const createActivity = async (req, res) => {
-  const { title, description, location, dateTime, type } = req.body;
+  const { title, description, location, date, time, type } = req.body;
 
   try {
     const activity = new Activity({
       title,
       description,
       location,
-      dateTime,
+      date,
+      time,
       type: type || 'other',
     });
 

@@ -11,6 +11,16 @@ export const bookActivity = async (req, res) => {
       return res.status(404).json({ message: 'Activity not found' });
     }
 
+    if(activity.isBooked){
+        return res.status(404).json({ message: 'Activity has already been booked' });
+    }
+
+    await Activity.findByIdAndUpdate(activityId, { isBooked: true });
+
+    // console.log(activity)
+
+    // console.log(activity.title);
+
     // Create new booking
     const booking = new Booking({
       user: req.user.id,
