@@ -1,0 +1,4 @@
+Port = 3000
+DbUserName = abcrdsa
+DbPassword = 1234567
+JWT_SECRET= 893747
