@@ -9,15 +9,37 @@ env.config();
 const app = express();
 
 
-const port = process.env.Port;
+app.use(express.json());
+
+const port = process.env.Port  || 3000;
+
 
 connectDb();
+// // app.get('/', (req,res)=> {
+// //     res.send("Hello");
+// // })
+
+// // import userRouter from './routes/user.routes.js'
+// import auth from './routes/v1/auth.js'
+// // import { loginUser } from "./controllers/user.controller.js";
 
 
-app.get('/', (req,res)=> {
-    res.send("Hello");
-})
+// // app.use("/api/v1/users", userRouter)
 
+
+// app.use('/api/v1/auth', auth);
+// app.use('/api/v1/activities', require('./routes/v1/activities'));
+// app.use('/api/v1/bookings', require('./routes/v1/bookings'));
+
+
+// Versioned Routes (v1)
+import authRoutes from './routes/v1/auth.js';
+import activitiesRoutes from './routes/v1/activities.js';
+import bookingsRoutes from './routes/v1/bookings.js';
+
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/activities', activitiesRoutes);
+app.use('/api/v1/bookings', bookingsRoutes);
 
 app.listen(port,()=>{
     console.log(`Listening to ${port}`);
