@@ -5,7 +5,7 @@ export const bookActivity = async (req, res) => {
   const { activityId } = req.body;
 
   try {
-    // Check if activity exists
+    
     const activity = await Activity.findById(activityId);
     if (!activity) {
       return res.status(404).json({ message: 'Activity not found' });
@@ -21,13 +21,11 @@ export const bookActivity = async (req, res) => {
 
     // console.log(activity.title);
 
-    // Create new booking
     const booking = new Booking({
       user: req.user.id,
       activity: activityId,
     });
 
-    // Save booking
     await booking.save();
 
     res.status(201).json({ message: 'Activity booked successfully', booking });

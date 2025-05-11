@@ -36,7 +36,7 @@ export const createActivity = async (req, res) => {
       location,
       date,
       time,
-      type: type || 'other',
+      type: type
     });
 
     await activity.save();
