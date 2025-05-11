@@ -3,10 +3,7 @@ import { listActivities, createActivity } from '../../controllers/v1/activitiesC
 
 const router = express.Router();
 
-// List all activities
 router.get('/', listActivities);
-
-// Temporary endpoint to create an activity (for testing)
 router.post('/', createActivity);
 
 export default router;
